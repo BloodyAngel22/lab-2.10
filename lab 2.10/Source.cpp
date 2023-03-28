@@ -14,15 +14,19 @@
 
 int remove_numbers(char* str, char* storageStr,int counter) {
 	int numbers = 0; int countsyb = 0;
+	int j = 0;
 	for (int i = 0; i < counter; i++) {
+		if (str[i] > '9') {
+			storageStr[j] = str[i];
+			j++;
+		}
 		if (str[i] >= '0' and str[i] <= '9') {
 			numbers++;
 		}
-		if (str[i] > '9') storageStr[i] = str[i];
-
 	}
-	printf("Strstorage = ");
-	for (int i = 0; i < counter; i++)
+	storageStr[counter - numbers] = '\0';
+	printf("Вывод строки с удаленными цифрами\n");
+	for (int i = 0; storageStr[i] != '\0'; i++)
 		printf("%c", storageStr[i]);
 	printf("\n");
 	return numbers;
@@ -95,8 +99,6 @@ int main() {
 	{
 	case 1:
 		storage = remove_numbers(str, storageStr, counter);
-		printf("Вывод строки\n");
-		printf("%s\n", str);
 		printf("Количество удаленных цифр: %d\n", storage);
 		break;
 
