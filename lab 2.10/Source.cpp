@@ -12,15 +12,19 @@
 /*Дана строка. Вставить после каждого символа два случайных
 символа.*/
 
-int remove_numbers(char* str,int counter) {
-	int numbers = 0;
+int remove_numbers(char* str, char* storageStr,int counter) {
+	int numbers = 0; int countsyb = 0;
 	for (int i = 0; i < counter; i++) {
-		if (str[i] == '1' or str[i] == '2' or str[i] == '3' or str[i] == '4' or str[i] == '5' or str[i] == '6' or str[i] == '7' or
-			str[i] == '8' or str[i] == '9' or str[i] == '0') {
+		if (str[i] >= '0' and str[i] <= '9') {
 			numbers++;
-			str[i] = ' ';
 		}
+		if (str[i] > '9') storageStr[i] = str[i];
+
 	}
+	printf("Strstorage = ");
+	for (int i = 0; i < counter; i++)
+		printf("%c", storageStr[i]);
+	printf("\n");
 	return numbers;
 }
 
@@ -78,7 +82,9 @@ int main() {
 	} while (choice_task < 1 or choice_task > 3);
 
 	printf("Введите строку\n");
-	scanf_s("%s", &str, 100);
+	//scanf_s("%s", &str, 100);
+	while (getchar() != '\n');
+	gets_s(str);
 	int storage;
 	int counter = 0;
 	while (str[counter] != '\0') {
@@ -88,7 +94,7 @@ int main() {
 	switch (choice_task)
 	{
 	case 1:
-		storage = remove_numbers(str, counter);
+		storage = remove_numbers(str, storageStr, counter);
 		printf("Вывод строки\n");
 		printf("%s\n", str);
 		printf("Количество удаленных цифр: %d\n", storage);
