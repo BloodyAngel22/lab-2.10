@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <cstdio>
 #include <time.h>
+#include <limits.h>
 
 //Удалить из текста все цифры. Определить количество удаленных цифр.
 
@@ -34,21 +35,24 @@ int remove_numbers(char* str, char* storageStr,int counter) {
 
 void early_symbol(char* str, int counter) {
 	int flag_x = 0, flag_w = 0;
-	int Xposition = 0, Wposition = 0;
+	int Xposition, Wposition;
 	for (int i = 0; i < counter; i++) {
-		if (str[i] == 'x') {
+		if (str[i] == 'x' and flag_x == 0) {
 			if (flag_x == 0)
 				Xposition = i;
 			flag_x = 1;
 		}
-		if (str[i] == 'w') {
+		if (str[i] == 'w' and flag_w == 0) {
 			if (flag_w == 0)
 				Wposition = i;
 			flag_w = 1;
 		}
 	}
-	if (Xposition < Wposition) printf("x идет раньше чем w");
-	else if (Wposition < Xposition) printf("w идет раньше чем x");
+	if (flag_x == 0) Xposition = INT_MAX;
+	if (flag_w == 0) Wposition = INT_MAX;
+
+	if (Xposition < Wposition) printf("x идет раньше чем w\n");
+	if (Wposition < Xposition) printf("w идет раньше чем x\n");
 
 	if (flag_x == 0) {
 		printf("x нет в массиве\n");
