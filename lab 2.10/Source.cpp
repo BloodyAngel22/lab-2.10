@@ -13,64 +13,58 @@
 /*Дана строка. Вставить после каждого символа два случайных
 символа.*/
 
-int remove_numbers(char* str, char* storageStr,int counter) {
-	int numbers = 0; int countsyb = 0;
+void remove_numbers(char* str, char* storageStr,int counter) {
+	int numbers = 0;
 	int j = 0;
-	for (int i = 0; i < counter; i++) {
-		if (str[i] > '9') {
+	for (int i = 0; i <= counter; i++) {
+		if (str[i] > '9' or str[i] < '0') {
 			storageStr[j] = str[i];
 			j++;
 		}
-		if (str[i] >= '0' and str[i] <= '9') {
+		/*if (str[i] >= '0' and str[i] <= '9') {
 			numbers++;
-		}
+		}*/
+		else numbers++;
 	}
-	storageStr[counter - numbers] = '\0';
 	printf("Вывод строки с удаленными цифрами\n");
-	for (int i = 0; storageStr[i] != '\0'; i++)
-		printf("%c", storageStr[i]);
+	printf("%s", storageStr);
 	printf("\n");
-	return numbers;
+	printf("Количетсво символов %d", numbers);
 }
 
 void early_symbol(char* str, int counter) {
-	int flag_x = 0, flag_w = 0;
-	int Xposition, Wposition;
+	//int flag_x = 0, flag_w = 0;
+	int Xposition = -1, Wposition = -1;
 	for (int i = 0; i < counter; i++) {
-		if (str[i] == 'x' and flag_x == 0) {
-			if (flag_x == 0)
-				Xposition = i;
-			flag_x = 1;
+		if (str[i] == 'x' and Xposition < 0) {
+			Xposition = i;
 		}
-		if (str[i] == 'w' and flag_w == 0) {
-			if (flag_w == 0)
-				Wposition = i;
-			flag_w = 1;
+		if (str[i] == 'w' and Wposition < 0) {
+			Wposition = i;
 		}
 	}
-	if (flag_x == 0) Xposition = INT_MAX;
-	if (flag_w == 0) Wposition = INT_MAX;
+	//if (Xposition < 0) Xposition = INT_MAX;
+	//if (Wposition < 0) Wposition = INT_MAX;
 
-	if (Xposition < Wposition) printf("x идет раньше чем w\n");
-	if (Wposition < Xposition) printf("w идет раньше чем x\n");
+	if (Xposition < Wposition and Xposition >= 0) printf("x идет раньше чем w\n");
+	if (Wposition < Xposition and Wposition >= 0) printf("w идет раньше чем x\n");
 
-	if (flag_x == 0) {
+	if (Xposition < 0) {
 		printf("x нет в массиве\n");
 	}
-	if (flag_w == 0) {
+	if (Wposition < 0) {
 		printf("w нет в массиве\n");
 	}
 }
 
 void insert_two_random_symbol(char* str, char* storageStr, int counter) {
-	counter = counter * 3;
-	for (int i = 0, j = 0; i <= counter; i+=3, j++) {
+	for (int i = 0, j = 0; j <= counter; i+=3, j++) {
 		storageStr[i] = str[j];
-		storageStr[i + 1] = rand() % 205 + 50;
-		storageStr[i + 2] = rand() % 205 + 50;
+		storageStr[i + 1] = rand() % ('Z' - 'A' + 1) + 'A';
+		storageStr[i + 2] = rand() % ('Z' - 'A' + 1) + 'A';
 	}
 
-	printf("Вывод строки с 2 рандомными симваолами\n");
+	printf("Вывод строки с 2 рандомными символами\n");
 	printf("%s\n", storageStr);
 }
 
@@ -102,8 +96,7 @@ int main() {
 	switch (choice_task)
 	{
 	case 1:
-		storage = remove_numbers(str, storageStr, counter);
-		printf("Количество удаленных цифр: %d\n", storage);
+		remove_numbers(str, storageStr, counter);
 		break;
 
 	case 2:
